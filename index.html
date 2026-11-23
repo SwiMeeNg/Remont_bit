@@ -1,0 +1,1390 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>РЕМБЫТТЕХ // Сервис срочного ремонта бытовой техники на дому</title>
+  <style>
+    /* ==========================================================================
+       DESIGN TOKENS & RESET (100% SELF-CONTAINED CSS)
+       ========================================================================== */
+    :root {
+      --bg-main: #F1F5F9;
+      --bg-card: #FFFFFF;
+      --bg-soft: #E0F2FE;
+      --navy: #0F172A;
+      --navy-light: #1E293B;
+      --border: #CBD5E1;
+      --border-soft: #E2E8F0;
+      --primary: #0284C7;
+      --primary-hover: #0369A1;
+      --cyan: #0EA5E9;
+      --primary-light: rgba(2, 132, 199, 0.1);
+      --text-main: #0F172A;
+      --text-muted: #475569;
+      --green-wa: #16A34A;
+      --green-wa-hover: #15803D;
+      --amber: #F59E0B;
+      --radius: 20px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      background-color: var(--bg-main);
+      color: var(--text-main);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Inter, Arial, sans-serif;
+      line-height: 1.5;
+    }
+
+    body {
+      background-color: var(--bg-main);
+      background-image:
+        radial-gradient(circle at 85% 0%, rgba(14, 165, 233, 0.12) 0%, transparent 45%),
+        radial-gradient(circle at 10% 50%, rgba(2, 132, 199, 0.06) 0%, transparent 40%);
+      overflow-x: hidden;
+      padding-bottom: 94px;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    svg {
+      display: inline-block;
+      vertical-align: middle;
+      flex-shrink: 0;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 0 18px;
+    }
+
+    /* ==========================================================================
+       STICKY HEADER
+       ========================================================================== */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(15, 23, 42, 0.94);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      color: #FFFFFF;
+    }
+
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 70px;
+      gap: 12px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-logo {
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--cyan) 0%, var(--primary) 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+      font-size: 20px;
+      color: #FFFFFF;
+      box-shadow: 0 6px 16px rgba(14, 165, 233, 0.35);
+    }
+
+    .brand-title {
+      font-weight: 900;
+      font-size: 15px;
+      letter-spacing: 0.04em;
+      color: #FFFFFF;
+      line-height: 1.15;
+    }
+
+    .brand-sub {
+      font-size: 11px;
+      color: #94A3B8;
+      font-weight: 600;
+      margin-top: 2px;
+    }
+
+    .header-cta {
+      background: var(--cyan);
+      color: #FFFFFF;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 4px 14px rgba(14, 165, 233, 0.35);
+      transition: all 0.2s ease;
+    }
+
+    .header-cta:hover {
+      background: var(--primary);
+      transform: translateY(-1px);
+    }
+
+    /* ==========================================================================
+       HERO SECTION
+       ========================================================================== */
+    .hero {
+      padding: 32px 0 24px;
+    }
+
+    .trust-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #FFFFFF;
+      border: 1px solid var(--border-soft);
+      color: var(--primary);
+      padding: 7px 14px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.03em;
+      box-shadow: 0 3px 12px rgba(15, 23, 42, 0.05);
+      margin-bottom: 18px;
+    }
+
+    .trust-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--cyan);
+      box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.22);
+    }
+
+    h1 {
+      font-size: clamp(27px, 5.5vw, 48px);
+      font-weight: 900;
+      line-height: 1.12;
+      letter-spacing: -0.025em;
+      color: var(--navy);
+      margin-bottom: 16px;
+    }
+
+    h1 span {
+      color: var(--primary);
+    }
+
+    .hero-desc {
+      color: var(--text-muted);
+      font-size: 15px;
+      max-width: 640px;
+      margin-bottom: 24px;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      background: var(--primary);
+      color: #FFFFFF;
+      font-weight: 800;
+      font-size: 14px;
+      padding: 15px 24px;
+      border-radius: 14px;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 8px 22px rgba(2, 132, 199, 0.28);
+      transition: all 0.2s ease;
+      flex: 1 1 220px;
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-hover);
+      transform: translateY(-1px);
+    }
+
+    .btn-messenger {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      background: #FFFFFF;
+      border: 1.5px solid var(--border-soft);
+      color: var(--navy);
+      font-weight: 700;
+      font-size: 14px;
+      padding: 15px 24px;
+      border-radius: 14px;
+      cursor: pointer;
+      box-shadow: 0 3px 12px rgba(15, 23, 42, 0.04);
+      transition: all 0.2s ease;
+      flex: 1 1 240px;
+    }
+
+    .btn-messenger:hover {
+      border-color: var(--green-wa);
+      color: var(--green-wa);
+    }
+
+    .rating-card {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+      background: #FFFFFF;
+      border: 1px solid var(--border-soft);
+      border-radius: 16px;
+      padding: 14px 18px;
+      box-shadow: 0 4px 15px rgba(15, 23, 42, 0.03);
+    }
+
+    .rating-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--navy);
+    }
+
+    .stars {
+      color: var(--amber);
+      font-weight: 900;
+      font-size: 14px;
+      letter-spacing: 1px;
+    }
+
+    .diag-tag {
+      font-size: 11px;
+      font-weight: 800;
+      color: var(--primary);
+      background: var(--primary-light);
+      padding: 5px 11px;
+      border-radius: 8px;
+    }
+
+    /* DARK TECH SERVICE BANNER */
+    .tech-banner {
+      margin-top: 22px;
+      background: linear-gradient(135deg, #0F172A 0%, #0C4A6E 100%);
+      color: #FFFFFF;
+      border-radius: var(--radius);
+      padding: 24px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 14px 34px rgba(15, 23, 42, 0.16);
+    }
+
+    .tech-banner::after {
+      content: "";
+      position: absolute;
+      top: -50px;
+      right: -50px;
+      width: 190px;
+      height: 190px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(56, 189, 248, 0.22) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .tech-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 14px;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: #7DD3FC;
+    }
+
+    .tech-pill {
+      background: rgba(56, 189, 248, 0.16);
+      border: 1px solid rgba(56, 189, 248, 0.35);
+      padding: 4px 10px;
+      border-radius: 8px;
+    }
+
+    .tech-title {
+      font-size: clamp(19px, 3.8vw, 24px);
+      font-weight: 900;
+      line-height: 1.25;
+      margin-bottom: 8px;
+    }
+
+    .tech-sub {
+      font-size: 13px;
+      color: #CBD5E1;
+      margin-bottom: 20px;
+      max-width: 640px;
+    }
+
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+
+    .stat-box {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 14px;
+      padding: 13px 10px;
+      text-align: center;
+    }
+
+    .stat-num {
+      font-size: 17px;
+      font-weight: 900;
+      color: #38BDF8;
+    }
+
+    .stat-lbl {
+      font-size: 11px;
+      color: #E2E8F0;
+      margin-top: 3px;
+    }
+
+    /* ==========================================================================
+       SECTIONS & INTERACTIVE REPAIR CALCULATOR
+       ========================================================================== */
+    .section {
+      padding: 28px 0;
+    }
+
+    .section-tag {
+      color: var(--primary);
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 6px;
+    }
+
+    h2 {
+      font-size: clamp(22px, 4.5vw, 32px);
+      font-weight: 900;
+      color: var(--navy);
+      line-height: 1.18;
+      margin-bottom: 18px;
+    }
+
+    .calc-panel {
+      background: #FFFFFF;
+      border: 1px solid var(--border-soft);
+      border-radius: var(--radius);
+      padding: 22px;
+      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.05);
+    }
+
+    .step-label {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--navy);
+      margin-bottom: 14px;
+    }
+
+    .step-badge {
+      width: 24px;
+      height: 24px;
+      border-radius: 8px;
+      background: var(--primary);
+      color: #FFFFFF;
+      font-size: 12px;
+      font-weight: 800;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* STEP 1: APPLIANCE TYPE CARDS */
+    .appliance-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin-bottom: 24px;
+    }
+
+    @media (max-width: 720px) {
+      .appliance-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    .app-card {
+      border: 1.5px solid var(--border-soft);
+      background: var(--bg-main);
+      border-radius: 15px;
+      padding: 14px 12px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 8px;
+      user-select: none;
+    }
+
+    .app-card:hover {
+      border-color: rgba(2, 132, 199, 0.5);
+    }
+
+    .app-card.active {
+      border-color: var(--primary);
+      background: var(--primary-light);
+      box-shadow: 0 4px 14px rgba(2, 132, 199, 0.12);
+    }
+
+    .app-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      background: #FFFFFF;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 8px rgba(15, 23, 42, 0.06);
+    }
+
+    .app-card.active .app-icon {
+      background: var(--primary);
+      color: #FFFFFF;
+    }
+
+    .app-title {
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--navy);
+      line-height: 1.25;
+    }
+
+    /* STEP 2: SYMPTOMS / BREAKDOWNS LIST */
+    .symptoms-list {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      margin-bottom: 24px;
+    }
+
+    @media (max-width: 680px) {
+      .symptoms-list {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .sym-item {
+      border: 1.5px solid var(--border-soft);
+      background: var(--bg-main);
+      border-radius: 14px;
+      padding: 15px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      user-select: none;
+    }
+
+    .sym-item:hover {
+      border-color: rgba(2, 132, 199, 0.45);
+    }
+
+    .sym-item.active {
+      border-color: var(--primary);
+      background: var(--primary-light);
+      box-shadow: 0 4px 12px rgba(2, 132, 199, 0.09);
+    }
+
+    .sym-name {
+      font-weight: 800;
+      font-size: 14px;
+      color: var(--navy);
+    }
+
+    .sym-desc {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 3px;
+    }
+
+    .sym-meta {
+      text-align: right;
+      flex-shrink: 0;
+    }
+
+    .sym-price {
+      font-weight: 900;
+      font-size: 15px;
+      color: var(--primary);
+    }
+
+    .sym-time {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    /* SUMMARY CARD */
+    .summary-box {
+      background: var(--bg-soft);
+      border: 1px solid rgba(2, 132, 199, 0.28);
+      border-radius: 18px;
+      padding: 20px;
+    }
+
+    .sum-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .free-diag-badge {
+      background: #FFFFFF;
+      color: var(--green-wa);
+      border: 1px solid rgba(22, 163, 74, 0.3);
+      font-size: 11px;
+      font-weight: 800;
+      padding: 4px 10px;
+      border-radius: 999px;
+    }
+
+    .sum-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 10px;
+      font-size: 13px;
+    }
+
+    .sum-total {
+      font-size: 24px;
+      font-weight: 900;
+      color: var(--navy);
+    }
+
+    .btn-wa-book {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      width: 100%;
+      background: var(--green-wa);
+      color: #FFFFFF;
+      font-weight: 800;
+      font-size: 14px;
+      padding: 15px;
+      border-radius: 14px;
+      border: none;
+      cursor: pointer;
+      margin-top: 14px;
+      margin-bottom: 10px;
+      box-shadow: 0 6px 18px rgba(22, 163, 74, 0.26);
+      transition: background 0.2s ease;
+    }
+
+    .btn-wa-book:hover {
+      background: var(--green-wa-hover);
+    }
+
+    .btn-call-master {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      background: var(--navy);
+      color: #FFFFFF;
+      font-weight: 800;
+      font-size: 14px;
+      padding: 15px;
+      border-radius: 14px;
+      border: none;
+      cursor: pointer;
+      transition: opacity 0.2s ease;
+    }
+
+    .btn-call-master:hover {
+      opacity: 0.92;
+    }
+
+    /* ==========================================================================
+       BENTO GRID OF 4 ADVANTAGES
+       ========================================================================== */
+    .bento-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+
+    @media (max-width: 600px) {
+      .bento-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .bento-card {
+      background: #FFFFFF;
+      border: 1px solid var(--border-soft);
+      border-radius: 18px;
+      padding: 20px;
+      box-shadow: 0 4px 12px rgba(15, 23, 42, 0.02);
+    }
+
+    .bento-icon {
+      width: 38px;
+      height: 38px;
+      border-radius: 11px;
+      background: var(--primary-light);
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+      font-size: 13px;
+      margin-bottom: 12px;
+    }
+
+    .bento-title {
+      font-size: 15px;
+      font-weight: 800;
+      color: var(--navy);
+      margin-bottom: 6px;
+    }
+
+    .bento-text {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    /* ==========================================================================
+       CONTACTS FOOTER BLOCK
+       ========================================================================== */
+    .contacts-card {
+      background: #FFFFFF;
+      border: 1px solid var(--border-soft);
+      border-radius: var(--radius);
+      padding: 22px;
+      margin-top: 20px;
+      box-shadow: 0 4px 14px rgba(15, 23, 42, 0.03);
+    }
+
+    .contact-list {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-top: 14px;
+      font-size: 14px;
+    }
+
+    @media (max-width: 680px) {
+      .contact-list {
+        grid-template-columns: 1fr;
+        gap: 12px;
+      }
+    }
+
+    .contact-list strong {
+      display: block;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--primary);
+      margin-bottom: 2px;
+    }
+
+    /* ==========================================================================
+       FLOATING CUSTOMIZER BUTTON & MODALS
+       ========================================================================== */
+    .demo-fab {
+      position: fixed;
+      bottom: 16px;
+      right: 16px;
+      z-index: 90;
+      background: var(--navy);
+      border: 1.5px solid var(--cyan);
+      color: #FFFFFF;
+      padding: 12px 16px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 800;
+      box-shadow: 0 10px 26px rgba(15, 23, 42, 0.35);
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
+
+    .demo-fab:hover {
+      transform: translateY(-2px);
+    }
+
+    .modal-backdrop {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.72);
+      backdrop-filter: blur(4px);
+      z-index: 100;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+
+    .modal-backdrop.open {
+      display: flex;
+    }
+
+    .modal-box {
+      background: #FFFFFF;
+      border-radius: 22px;
+      width: 100%;
+      max-width: 420px;
+      padding: 22px;
+      box-shadow: 0 24px 48px rgba(15, 23, 42, 0.28);
+    }
+
+    .modal-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 16px;
+      font-weight: 900;
+      color: var(--navy);
+      margin-bottom: 16px;
+    }
+
+    .modal-close {
+      background: var(--bg-main);
+      border: 1px solid var(--border-soft);
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      font-size: 15px;
+      color: var(--text-muted);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .field {
+      margin-bottom: 12px;
+    }
+
+    .field label {
+      display: block;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+
+    .field input {
+      width: 100%;
+      background: var(--bg-main);
+      border: 1px solid var(--border-soft);
+      color: var(--navy);
+      padding: 12px;
+      border-radius: 12px;
+      font-size: 14px;
+      outline: none;
+    }
+
+    .field input:focus {
+      border-color: var(--primary);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- STICKY HEADER -->
+  <header>
+    <div class="container header-inner">
+      <div class="brand">
+        <div class="brand-logo" id="ui-logo">Р</div>
+        <div>
+          <div class="brand-title" id="ui-brand">РЕМБЫТТЕХ</div>
+          <div class="brand-sub" id="ui-city">Срочный выезд на дом · Магадан</div>
+        </div>
+      </div>
+      <button type="button" class="header-cta" onclick="openBookModal()">Вызвать мастера</button>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- HERO SECTION -->
+    <section class="hero">
+      <div class="trust-pill">
+        <span class="trust-dot"></span>
+        ВЫЕЗД МАСТЕРА ЗА 40 МИНУТ · ГАРАНТИЯ ДО 2 ЛЕТ
+      </div>
+
+      <h1>СРОЧНЫЙ РЕМОНТ БЫТОВОЙ ТЕХНИКИ <span>НА ДОМУ В ДЕНЬ ОБРАЩЕНИЯ</span></h1>
+
+      <p class="hero-desc">
+        Восстанавливаем стиральные и посудомоечные машины, холодильники, варочные панели, духовые шкафы и кофемашины с оригинальными запчастями за 1 визит без вывоза в мастерскую.
+      </p>
+
+      <div class="hero-actions">
+        <a href="#calculator" class="btn-primary">Рассчитать ремонт</a>
+        <button type="button" class="btn-messenger" onclick="directWA()">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="#16A34A">
+            <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.006c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.394.86s.274.072.376-.043c.101-.116.433-.506.549-.68.116-.173.231-.145.39-.087s1.011.477 1.184.564.289.13.332.202c.045.072.045.419-.1.824z"/>
+          </svg>
+          WhatsApp / Telegram / MAX
+        </button>
+      </div>
+
+      <div class="rating-card">
+        <div class="rating-left">
+          <span class="stars">★★★★★ 4.9</span>
+          <span>На Яндекс Картах · 186 отзывов</span>
+        </div>
+        <span class="diag-tag">Бесплатная диагностика при ремонте</span>
+      </div>
+
+      <!-- DARK TECH SERVICE BANNER -->
+      <div class="tech-banner">
+        <div class="tech-top">
+          <span>СЕРВИСНАЯ СЛУЖБА // ВЫЕЗДНОЙ СКЛАД</span>
+          <span class="tech-pill">92% РЕМОНТОВ ЗА 1 ВИЗИТ</span>
+        </div>
+        <div class="tech-title">Мастер приезжает сразу со всем необходимым инструментом и запчастями</div>
+        <div class="tech-sub">
+          Работаем со всеми брендами: Bosch, Samsung, LG, Indesit, Ariston, Electrolux, Atlant, Haier, Beko, Candy и Miele.
+        </div>
+
+        <div class="stats-row">
+          <div class="stat-box">
+            <div class="stat-num">40 мин</div>
+            <div class="stat-lbl">Приезд по городу</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-num">0 ₽</div>
+            <div class="stat-lbl">Выезд и диагностика</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-num">24 мес.</div>
+            <div class="stat-lbl">Гарантия на детали</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- INTERACTIVE APPLIANCE REPAIR CALCULATOR -->
+    <section class="section" id="calculator">
+      <div class="section-tag">ОНЛАЙН-ДИАГНОСТИКА И ЦЕНА ЗА 15 СЕКУНД</div>
+      <h2>УЗНАЙТЕ СТОИМОСТЬ РЕМОНТА ПО СИМПТОМУ</h2>
+
+      <div class="calc-panel">
+        <!-- STEP 1: APPLIANCE TYPE -->
+        <div class="step-label">
+          <span class="step-badge">1</span>
+          ВЫБЕРИТЕ ТЕХНИКУ
+        </div>
+
+        <div class="appliance-grid" id="app-tabs">
+          <button type="button" class="app-card active" data-app="washer" onclick="pickAppliance(this)">
+            <div class="app-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                <rect x="3" y="2" width="18" height="20" rx="2"/><circle cx="12" cy="13" r="5"/><line x1="7" y1="6" x2="7.01" y2="6"/><line x1="11" y1="6" x2="11.01" y2="6"/>
+              </svg>
+            </div>
+            <div class="app-title">Стиральная машина</div>
+          </button>
+
+          <button type="button" class="app-card" data-app="fridge" onclick="pickAppliance(this)">
+            <div class="app-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                <rect x="5" y="2" width="14" height="20" rx="2"/><line x1="5" y1="10" x2="19" y2="10"/><line x1="9" y1="6" x2="9" y2="8"/><line x1="9" y1="14" x2="9" y2="17"/>
+              </svg>
+            </div>
+            <div class="app-title">Холодильник</div>
+          </button>
+
+          <button type="button" class="app-card" data-app="dishwasher" onclick="pickAppliance(this)">
+            <div class="app-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                <rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="8" x2="21" y2="8"/><path d="M8 14h8"/><path d="M10 17h4"/>
+              </svg>
+            </div>
+            <div class="app-title">Посудомоечная машина</div>
+          </button>
+
+          <button type="button" class="app-card" data-app="oven" onclick="pickAppliance(this)">
+            <div class="app-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                <rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8" cy="7" r="1"/><circle cx="12" cy="7" r="1"/><circle cx="16" cy="7" r="1"/><rect x="6" y="11" width="12" height="7" rx="1"/>
+              </svg>
+            </div>
+            <div class="app-title">Варочная панель / Духовка</div>
+          </button>
+        </div>
+
+        <!-- STEP 2: BREAKDOWN SYMPTOM -->
+        <div class="step-label">
+          <span class="step-badge">2</span>
+          ЧТО СЛУЧИЛОСЬ С ТЕХНИКОЙ?
+        </div>
+
+        <div class="symptoms-list" id="sym-list"></div>
+
+        <!-- LIVE SUMMARY CARD -->
+        <div class="summary-box">
+          <div class="sum-header">
+            <span style="font-size:11px; font-weight:800; letter-spacing:0.06em; text-transform:uppercase; color:#0284C7;">
+              ПРЕДВАРИТЕЛЬНЫЙ РАСЧЕТ РЕМОНТА
+            </span>
+            <span class="free-diag-badge">✓ Диагностика 0 ₽</span>
+          </div>
+
+          <div class="sum-row">
+            <span style="color:#475569;">Техника:</span>
+            <strong id="sum-app" style="color:#0F172A; text-align:right;">Стиральная машина</strong>
+          </div>
+          <div class="sum-row">
+            <span style="color:#475569;">Неисправность:</span>
+            <strong id="sum-sym" style="color:#0284C7; text-align:right;">Не сливает воду (засор / помпа)</strong>
+          </div>
+          <div class="sum-row">
+            <span style="color:#475569;">Время и гарантия:</span>
+            <strong id="sum-meta" style="color:#0F172A;">~45 мин · Гарантия 12 мес.</strong>
+          </div>
+          <div class="sum-row" style="border-top:1px solid rgba(2,132,199,0.22); padding-top:12px; margin-bottom:0;">
+            <span style="font-weight:800; color:#0F172A;">Стоимость работы:</span>
+            <span class="sum-total" id="sum-price">от 1 500 ₽</span>
+          </div>
+
+          <button type="button" class="btn-wa-book" onclick="sendRepairToWA()">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="#FFFFFF">
+              <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.006c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.394.86s.274.072.376-.043c.101-.116.433-.506.549-.68.116-.173.231-.145.39-.087s1.011.477 1.184.564.289.13.332.202c.045.072.045.419-.1.824z"/>
+            </svg>
+            Отправить поломку в WhatsApp
+          </button>
+          <button type="button" class="btn-call-master" onclick="openBookModal()">
+            Вызвать мастера за 40 мин
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- BENTO GRID OF 4 ADVANTAGES -->
+    <section class="section">
+      <div class="section-tag">СТАНДАРТ СЕРВИСА</div>
+      <h2>ПОЧЕМУ НАМ ДОВЕРЯЮТ ТЕХНИКУ</h2>
+
+      <div class="bento-grid">
+        <div class="bento-card">
+          <div class="bento-icon">01</div>
+          <div class="bento-title">Оригинальные запчасти с собой</div>
+          <div class="bento-text">
+            В багажнике у мастера всегда есть ходовые ТЭНы, помпы, датчики, термостаты, щетки и клапаны для ремонта за 1 визит.
+          </div>
+        </div>
+
+        <div class="bento-card">
+          <div class="bento-icon">02</div>
+          <div class="bento-title">Бесплатная диагностика</div>
+          <div class="bento-text">
+            Выезд мастера и точное определение причины поломки — 0 ₽ при согласии на дальнейший ремонт.
+          </div>
+        </div>
+
+        <div class="bento-card">
+          <div class="bento-icon">03</div>
+          <div class="bento-title">Официальная гарантия до 24 мес.</div>
+          <div class="bento-text">
+            Выписываем квитанцию с печатью и перечнем замененных деталей. Если поломка повторится — устраним за свой счет.
+          </div>
+        </div>
+
+        <div class="bento-card">
+          <div class="bento-icon">04</div>
+          <div class="bento-title">Фиксированная цена до начала работ</div>
+          <div class="bento-text">
+            Мастер озвучивает итоговую стоимость после диагностики до разбора узлов — сумма не вырастет в процессе.
+          </div>
+        </div>
+      </div>
+
+      <!-- CONTACTS FOOTER BLOCK -->
+      <div class="contacts-card">
+        <div class="section-tag">КОНТАКТЫ ДИСПЕТЧЕРСКОЙ</div>
+        <h3 style="font-size:20px; font-weight:900; color:#0F172A;" id="ui-footer-brand">РЕМБЫТТЕХ</h3>
+        <div class="contact-list">
+          <div>
+            <strong>Адрес мастерской</strong>
+            <span id="ui-address">г. Магадан, ул. Портовая, 14, оф. 12</span>
+          </div>
+          <div>
+            <strong>Телефон мастера / WhatsApp</strong>
+            <span id="ui-phone">+7 (914) 855-33-44</span>
+          </div>
+          <div>
+            <strong>Режим приема заявок</strong>
+            <span>Ежедневно с 08:00 до 22:00 (срочный выезд во все районы)</span>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- FLOATING CUSTOMIZER BUTTON -->
+  <button type="button" class="demo-fab" onclick="openCfgModal()">⚙️ Подстроить под мастера</button>
+
+  <!-- CUSTOMIZER MODAL -->
+  <div class="modal-backdrop" id="cfg-modal">
+    <div class="modal-box">
+      <div class="modal-head">
+        <span>Подстройка под мастера / сервис</span>
+        <button type="button" class="modal-close" onclick="closeCfgModal()">✕</button>
+      </div>
+      <div class="field">
+        <label>Название сервиса / имя мастера</label>
+        <input type="text" id="in-brand" value="РЕМБЫТТЕХ" />
+      </div>
+      <div class="field">
+        <label>Город</label>
+        <input type="text" id="in-city" value="Магадан" />
+      </div>
+      <div class="field">
+        <label>Адрес</label>
+        <input type="text" id="in-addr" value="г. Магадан, ул. Портовая, 14, оф. 12" />
+      </div>
+      <div class="field">
+        <label>Телефон (WhatsApp)</label>
+        <input type="text" id="in-phone" value="+7 (914) 855-33-44" />
+      </div>
+      <button type="button" class="btn-primary" style="width:100%;" onclick="applyCfg()">Применить к сайту</button>
+    </div>
+  </div>
+
+  <!-- BOOKING MODAL -->
+  <div class="modal-backdrop" id="book-modal">
+    <div class="modal-box">
+      <div class="modal-head">
+        <span>Вызов мастера на дом</span>
+        <button type="button" class="modal-close" onclick="closeBookModal()">✕</button>
+      </div>
+      <div class="field">
+        <label>Ваше имя</label>
+        <input type="text" id="bk-name" placeholder="Игорь" />
+      </div>
+      <div class="field">
+        <label>Контактный телефон</label>
+        <input type="tel" id="bk-phone" placeholder="+7 (999) 000-00-00" />
+      </div>
+      <div class="field">
+        <label>Адрес / Район выезда</label>
+        <input type="text" id="bk-addr" placeholder="ул. Ленина, 18" />
+      </div>
+      <button type="button" class="btn-wa-book" style="margin-bottom:0;" onclick="submitBook()">Отправить заявку в WhatsApp</button>
+    </div>
+  </div>
+
+  <script>
+    const APPLIANCE_DATA = {
+      washer: {
+        label: "Стиральная машина",
+        symptoms: [
+          {
+            name: "Не сливает воду (засор / помпа)",
+            desc: "Прочистка сливного тракта или замена сливного насоса Askoll",
+            price: "от 1 500 ₽",
+            time: "~45 мин",
+            warranty: "Гарантия 12 мес."
+          },
+          {
+            name: "Не греет воду (замена ТЭНа)",
+            desc: "Установка оригинального нагревателя с датчиком температуры",
+            price: "от 1 900 ₽",
+            time: "~50 мин",
+            warranty: "Гарантия 18 мес."
+          },
+          {
+            name: "Сильно шумит / гремит при отжиме (подшипники)",
+            desc: "Замена подшипникового узла, сальника и амортизаторов",
+            price: "от 3 800 ₽",
+            time: "~90 мин",
+            warranty: "Гарантия 24 мес."
+          },
+          {
+            name: "Не включается / ошибка на дисплее (модуль)",
+            desc: "Диагностика и восстановление платы управления или УБЛ",
+            price: "от 2 200 ₽",
+            time: "~60 мин",
+            warranty: "Гарантия 12 мес."
+          },
+          {
+            name: "Течет вода снизу (манжета / патрубки)",
+            desc: "Замена уплотнительной манжеты люка или герметизация патрубков",
+            price: "от 1 600 ₽",
+            time: "~45 мин",
+            warranty: "Гарантия 12 мес."
+          }
+        ]
+      },
+      fridge: {
+        label: "Холодильник",
+        symptoms: [
+          {
+            name: "Не морозит / слабо охлаждает (утечка / фреон)",
+            desc: "Опрессовка контура, устранение утечки и заправка хладагентом",
+            price: "от 2 500 ₽",
+            time: "~70 мин",
+            warranty: "Гарантия 18 мес."
+          },
+          {
+            name: "Намерзает лед / шуба (система No Frost)",
+            desc: "Замена датчика оттайки, таймера или ТЭНа испарителя",
+            price: "от 2 100 ₽",
+            time: "~60 мин",
+            warranty: "Гарантия 12 мес."
+          },
+          {
+            name: "Щелкает и не запускается (компрессор / реле)",
+            desc: "Замена пускозащитного реле или мотор-компрессора",
+            price: "от 1 800 ₽",
+            time: "~60 мин",
+            warranty: "Гарантия 24 мес."
+          },
+          {
+            name: "Течет вода внутри камеры (дренаж)",
+            desc: "Прочистка дренажной системы и восстановление отвода конденсата",
+            price: "от 1 400 ₽",
+            time: "~40 мин",
+            warranty: "Гарантия 12 мес."
+          }
+        ]
+      },
+      dishwasher: {
+        label: "Посудомоечная машина",
+        symptoms: [
+          {
+            name: "Не сливает воду / ошибка E24, E25",
+            desc: "Чистка фильтров, крыльчатки или замена дренажной помпы",
+            price: "от 1 600 ₽",
+            time: "~45 мин",
+            warranty: "Гарантия 12 мес."
+          },
+          {
+            name: "Не греет воду и плохо моет посуду",
+            desc: "Замена проточного нагревателя или циркуляционного насоса",
+            price: "от 2 400 ₽",
+            time: "~60 мин",
+            warranty: "Гарантия 18 мес."
+          },
+          {
+            name: "Сработал Аквастоп / ошибка E15",
+            desc: "Устранение протечки в поддоне и герметизация узлов",
+            price: "от 1 900 ₽",
+            time: "~50 мин",
+            warranty: "Гарантия 12 мес."
+          },
+          {
+            name: "Не набирает воду (клапан / прессостат)",
+            desc: "Замена впускного электромагнитного клапана или датчика уровня",
+            price: "от 1 700 ₽",
+            time: "~45 мин",
+            warranty: "Гарантия 12 мес."
+          }
+        ]
+      },
+      oven: {
+        label: "Варочная панель / Духовка",
+        symptoms: [
+          {
+            name: "Не работает одна или две конфорки",
+            desc: "Замена нагревательного элемента Hi-Light или силового ключа",
+            price: "от 1 900 ₽",
+            time: "~50 мин",
+            warranty: "Гарантия 12 мес."
+          },
+          {
+            name: "Не включается / ошибка на сенсорной панели",
+            desc: "Ремонт блока питания и сенсорного модуля управления",
+            price: "от 2 300 ₽",
+            time: "~60 мин",
+            warranty: "Гарантия 12 мес."
+          },
+          {
+            name: "Духовка не нагревается или сбита температура",
+            desc: "Замена верхнего/нижнего ТЭНа, конвекции или термостата",
+            price: "от 1 800 ₽",
+            time: "~50 мин",
+            warranty: "Гарантия 18 мес."
+          },
+          {
+            name: "Выбивает автомат при включении",
+            desc: "Поиск пробоя на корпус, замена клеммной колодки или ТЭНа",
+            price: "от 1 700 ₽",
+            time: "~45 мин",
+            warranty: "Гарантия 12 мес."
+          }
+        ]
+      }
+    };
+
+    let activeAppKey = "washer";
+    let activeSymIndex = 0;
+    let servicePhoneRaw = "79148553344";
+
+    function pickAppliance(btn) {
+      document.querySelectorAll("#app-tabs .app-card").forEach((c) => c.classList.remove("active"));
+      btn.classList.add("active");
+      activeAppKey = btn.dataset.app;
+      activeSymIndex = 0;
+      renderSymptoms();
+    }
+
+    function renderSymptoms() {
+      const appObj = APPLIANCE_DATA[activeAppKey];
+      const container = document.getElementById("sym-list");
+      container.innerHTML = "";
+
+      appObj.symptoms.forEach((sym, idx) => {
+        const div = document.createElement("div");
+        div.className = "sym-item" + (idx === activeSymIndex ? " active" : "");
+        div.onclick = () => {
+          activeSymIndex = idx;
+          renderSymptoms();
+        };
+        div.innerHTML = `
+          <div>
+            <div class="sym-name">${sym.name}</div>
+            <div class="sym-desc">${sym.desc}</div>
+          </div>
+          <div class="sym-meta">
+            <div class="sym-price">${sym.price}</div>
+            <div class="sym-time">${sym.time}</div>
+          </div>
+        `;
+        container.appendChild(div);
+      });
+
+      updateSummary();
+    }
+
+    function updateSummary() {
+      const appObj = APPLIANCE_DATA[activeAppKey];
+      const sym = appObj.symptoms[activeSymIndex];
+      document.getElementById("sum-app").textContent = appObj.label;
+      document.getElementById("sum-sym").textContent = sym.name;
+      document.getElementById("sum-meta").textContent = `${sym.time} · ${sym.warranty}`;
+      document.getElementById("sum-price").textContent = sym.price;
+    }
+
+    function directWA() {
+      const brand = document.getElementById("in-brand").value.trim() || "РЕМБЫТТЕХ";
+      const msg = encodeURIComponent(
+        `Здравствуйте! Нужен ремонт бытовой техники на дому в сервисе ${brand}. Подскажите, когда сможет приехать мастер?`
+      );
+      window.open(`https://wa.me/${servicePhoneRaw}?text=${msg}`, "_blank");
+    }
+
+    function sendRepairToWA() {
+      const brand = document.getElementById("in-brand").value.trim() || "РЕМБЫТТЕХ";
+      const appObj = APPLIANCE_DATA[activeAppKey];
+      const sym = appObj.symptoms[activeSymIndex];
+      const msg = encodeURIComponent(
+        `Здравствуйте! Оставляю заявку на ремонт в ${brand}:\n` +
+          `• Техника: ${appObj.label}\n` +
+          `• Поломка: ${sym.name}\n` +
+          `• Оценка на сайте: ${sym.price}\n` +
+          `Подскажите ближайшее время выезда мастера?`
+      );
+      window.open(`https://wa.me/${servicePhoneRaw}?text=${msg}`, "_blank");
+    }
+
+    function openCfgModal() {
+      document.getElementById("cfg-modal").classList.add("open");
+    }
+
+    function closeCfgModal() {
+      document.getElementById("cfg-modal").classList.remove("open");
+    }
+
+    function openBookModal() {
+      document.getElementById("book-modal").classList.add("open");
+    }
+
+    function closeBookModal() {
+      document.getElementById("book-modal").classList.remove("open");
+    }
+
+    function applyCfg() {
+      const brand = document.getElementById("in-brand").value.trim() || "РЕМБЫТТЕХ";
+      const city = document.getElementById("in-city").value.trim() || "Магадан";
+      const addr = document.getElementById("in-addr").value.trim();
+      const phone = document.getElementById("in-phone").value.trim();
+
+      document.getElementById("ui-logo").textContent = brand.charAt(0).toUpperCase();
+      document.getElementById("ui-brand").textContent = brand.toUpperCase();
+      document.getElementById("ui-footer-brand").textContent = brand.toUpperCase();
+      document.getElementById("ui-city").textContent = `Срочный выезд на дом · ${city}`;
+      document.getElementById("ui-address").textContent = addr;
+      document.getElementById("ui-phone").textContent = phone;
+      document.title = `${brand.toUpperCase()} // Сервис срочного ремонта бытовой техники на дому`;
+
+      const digits = phone.replace(/\D/g, "");
+      if (digits.length >= 10) {
+        servicePhoneRaw = digits.startsWith("8") ? "7" + digits.slice(1) : digits;
+      }
+      closeCfgModal();
+    }
+
+    function submitBook() {
+      const name = document.getElementById("bk-name").value.trim() || "Клиент";
+      const phone = document.getElementById("bk-phone").value.trim() || "Не указан";
+      const addr = document.getElementById("bk-addr").value.trim() || "Не указан";
+      const appObj = APPLIANCE_DATA[activeAppKey];
+      const sym = appObj.symptoms[activeSymIndex];
+
+      const msg = encodeURIComponent(
+        `Срочный вызов мастера на дом:\n` +
+          `• Имя: ${name}\n` +
+          `• Телефон: ${phone}\n` +
+          `• Адрес: ${addr}\n` +
+          `• Техника: ${appObj.label} (${sym.name} — ${sym.price})`
+      );
+      window.open(`https://wa.me/${servicePhoneRaw}?text=${msg}`, "_blank");
+      closeBookModal();
+    }
+
+    renderSymptoms();
+  </script>
+</body>
+</html>
